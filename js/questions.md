@@ -180,6 +180,9 @@ window.addEventListener("message", function(event) {})
 Метод Object.getOwnPropertyDescriptor позволяет получить полную информацию о свойстве.
 
 Чтобы изменить флаги, мы можем использовать метод Object.defineProperty.
+Object.defineProperty(user, "toString", {
+  enumerable: false
+});
 ```
 21. Прототипы, наследование?
 ```

@@ -1,6 +1,5 @@
-# JS
 
-1)
+### 1
 
 ```js
 // Что будет в console.log?
@@ -21,7 +20,7 @@ const userService = {
 console.log(userService.getFilteredUsers());
 ```
 
-2)
+### 2
 
 ```js
 // Какова последовательность console.log?
@@ -36,7 +35,7 @@ setTimeout(() => console.log(4), 0);
 console.log(5);
 ```
 
-3)
+### 3
 ```js
 // Сколько уйдёт запросов и почему?
 const obs$ = httpClient.get('https://zyfra.com');
@@ -49,4 +48,39 @@ obs$.subscribe(console.log);
 promise.then(console.log);
 promise.then(console.log);
 promise.then(console.log);
+```
+
+### 4
+
+```ts
+// Как можно улучшить данный код?
+@Component({
+  selector: 'repository-list',
+  template: `
+    <h1>Репозитории пользователя {{ username }}</h1>
+    <ul>
+      <li *ngFor="let repository of repositories$ | async">
+        {{ repository.name }}
+      </li>
+    </ul>
+    <div *ngIf="!(haveRepositories$ | async)">
+      Нет репозиториев
+    </div>
+  `,
+})
+export class RepositoryListComponent {
+  @Input() username: string;
+
+  public repositories$: Observable<RepositoryInfo[]>;
+  public haveRepositories$: Observable<boolean>;
+
+  constructor() {
+    const repositoryInfoService = new RepositoryInfoService();
+
+    this.repositories$ = repositoryInfoService.getRepositoryListForUser(this.username);
+    this.haveRepositories$ = this.repositories$.pipe(
+      map((repositories) => repositories?.length > 0)
+    );
+  }
+}
 ```
